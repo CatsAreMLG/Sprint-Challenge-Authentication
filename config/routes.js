@@ -45,9 +45,8 @@ const login = async (req, res) => {
     } else {
       try {
         const token = generateToken(user)
-        req.session = {}
         req.session.user = user
-        res.status(200).json({ token })
+        res.json({ token })
       } catch (error) {
         res.status(500).json({ error })
       }
