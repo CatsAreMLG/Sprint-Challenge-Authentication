@@ -22,7 +22,6 @@ const register = async (req, res) => {
       const added = await Users.addUser(body)
       res.status(201).json(added)
     } catch (error) {
-      console.log(error)
       res.status(500).json({ error: 'There was an error creating a user' })
     }
   } else res.status(500).json({ error: 'Please add a username and password' })
