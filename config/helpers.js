@@ -1,13 +1,8 @@
 const db = require('../database/dbConfig')
 
 module.exports = {
-  getUsers,
   findUser,
   addUser
-}
-
-function getUsers() {
-  return db('users').first()
 }
 function findUser(user) {
   return db('users')

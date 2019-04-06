@@ -9,7 +9,6 @@ const { jwtSecret } = require('./secrets')
 module.exports = server => {
   server.post('/api/register', register)
   server.post('/api/login', login)
-  server.get('/api/users', get)
   server.get('/api/jokes', authenticate, getJokes)
 }
 
@@ -25,15 +24,6 @@ const register = async (req, res) => {
       res.status(500).json({ error: 'There was an error creating a user' })
     }
   } else res.status(500).json({ error: 'Please add a username and password' })
-}
-
-const get = async (req, res) => {
-  try {
-    const users = await Users.getUsers()
-    res.status(200).json({ users })
-  } catch (error) {
-    res.status(500).json(error)
-  }
 }
 
 const login = async (req, res) => {
