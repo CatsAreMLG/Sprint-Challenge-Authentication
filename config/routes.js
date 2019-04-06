@@ -1,8 +1,10 @@
 const axios = require('axios')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const Users = require('./helpers')
 const { authenticate } = require('../auth/authenticate')
+const { jwtSecret } = require('./secrets')
 
 module.exports = server => {
   server.post('/api/register', register)
@@ -34,7 +36,25 @@ const get = async (req, res) => {
   }
 }
 
-const login = async (req, res) => {}
+const login = async (req, res) => {
+  const { body } = req
+  if (body && body.username && body.password) {
+    const user = await Users.findUser(body)
+    if (!user || !bcrypt.compareSync(body.password, user.password)) {
+      return res.status(401).json({ error: 'You shall not pass!' })
+    } else {
+      try {
+        const token = generateToken(user)
+        req.session = {}
+        req.session.user = user
+        res.status(200).json({ token })
+      } catch (error) {
+        res.status(500).json({ error })
+      }
+    }
+  } else
+    res.status(500).json({ error: 'Please provide a username and password' })
+}
 
 const getJokes = async (req, res) => {
   const requestOptions = {
@@ -49,4 +69,15 @@ const getJokes = async (req, res) => {
     .catch(err => {
       res.status(500).json({ message: 'Error Fetching Jokes', error: err })
     })
+}
+
+function generateToken(user) {
+  const payload = {
+    subject: user.id,
+    username: user.username
+  }
+  const options = {
+    expiresIn: '1d'
+  }
+  return jwt.sign(payload, jwtSecret, options)
 }
