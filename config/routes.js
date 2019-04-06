@@ -19,9 +19,10 @@ const register = async (req, res) => {
     const hash = bcrypt.hashSync(body.password, 14)
     body.password = hash
     try {
-      const added = await Users.addUser()
+      const added = await Users.addUser(body)
       res.status(201).json(added)
     } catch (error) {
+      console.log(error)
       res.status(500).json({ error: 'There was an error creating a user' })
     }
   } else res.status(500).json({ error: 'Please add a username and password' })
