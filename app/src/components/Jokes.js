@@ -24,9 +24,16 @@ class Jokes extends React.Component {
   render() {
     return (
       <div>
-        <div>
+        <div className={'jokes'}>
           {this.state.jokes.map((joke, i) => (
-            <div key={joke + i}>{joke.joke}</div>
+            <div
+              className={'joke'}
+              key={joke + i}
+              style={{
+                backgroundColor: `hsl(${Math.random() * 360},25%,70%)`
+              }}>
+              {joke.joke}
+            </div>
           ))}
         </div>
       </div>
