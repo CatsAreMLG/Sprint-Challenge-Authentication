@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+a {
+  text-decoration: none;
+}
+
+nav {
+  padding: 1rem 0 0 0;
+}
+
 .jokes {
   display: flex;
   justify-content: center;
