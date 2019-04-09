@@ -1,0 +1,36 @@
+.App {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+nav {
+  padding: 1rem 0 0 0;
+}
+
+.jokes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-top: 1px solid #123;
+}
+
+.joke {
+  border: 1px solid #123;
+  padding: 1rem;
+  margin: 0.5rem;
+  max-width: 50%;
+  cursor: pointer;
+  transform: scale(1);
+  z-index: 1;
+  transition: transform 100ms ease-in-out
+}
+
+.joke:hover {
+  z-index: 100;
+  transform: scale(1.05)
+}
